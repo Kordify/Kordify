@@ -10,6 +10,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
+import kotlin.io.path.exists
 
 /**
  * Manage plugins
@@ -29,7 +30,12 @@ class PluginManager {
     private fun listPlugins() {
         val result: MutableList<File> = ArrayList()
 
-        Files.newDirectoryStream(Paths.get("./plugins")).use { stream ->
+        val path = Paths.get("./plugins")
+        if (!path.exists()) {
+            path.toFile().mkdir()
+        }
+
+        Files.newDirectoryStream(path).use { stream ->
             for (file in stream) {
                 if (file != null && file.fileName.toString().endsWith(".jar")) {
                     result.add(file.toFile())
