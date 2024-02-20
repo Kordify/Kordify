@@ -1,18 +1,22 @@
 package world.anhgelus.kordify
 
-import world.anhgelus.kordify.common.utils.Logger
+import world.anhgelus.kordify.common.utils.MainLogger
 import world.anhgelus.kordify.main.plugins.PluginManager
 
 fun main() {
-    Logger.info("Starting")
-    Logger.info("Loading plugins inside ./plugins")
+    MainLogger.info("Starting")
+
+    MainLogger.info("Loading plugins inside ./plugins")
     val manager = PluginManager()
     val loaded = manager.getPlugins().size
-    Logger.info("Loaded $loaded plugins")
-    Logger.info("Loading the bot")
+    MainLogger.info("Loaded $loaded plugins")
+
+    MainLogger.info("Loading the bot")
     //TODO: load the bot
-    Logger.info("Starting plugins")
+
+    MainLogger.info("Starting plugins")
     val n = manager.startPlugins()
-    Logger.info("$n / $loaded plugins started")
+    MainLogger.info("$n / $loaded plugins started")
+
     //TODO: start the bot
 }

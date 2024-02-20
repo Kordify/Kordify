@@ -1,7 +1,10 @@
 package world.anhgelus.kordify.main.plugins
 
-import world.anhgelus.kordify.common.utils.Logger
+import org.yaml.snakeyaml.Yaml
+import world.anhgelus.kordify.api.Plugin
+import world.anhgelus.kordify.common.utils.MainLogger
 import java.io.File
+import java.net.URLClassLoader
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.jar.JarEntry
@@ -43,11 +46,12 @@ class PluginManager {
                 }
             }
             if (conf == null) {
-                Logger.info(jarFile.name+" is not a valid plugin")
+                MainLogger.info(jarFile.name+" is not a valid plugin")
             } else {
                 val ins = jarFile.getInputStream(conf)
-                //TODO: parse conf
-                plugins.add(PluginData(jarFile.name, "", "", ""))
+                val yaml = Yaml()
+                val m: Map<String, Any> = yaml.load(ins)
+                plugins.add(PluginData.loadFromMap(m, jarFile.name))
             }
         }
     }
@@ -57,8 +61,20 @@ class PluginManager {
      * @return the number of plugin started
      */
     fun startPlugins() : Int {
-        //TODO: start plugins
-        return 0
+        var c = 0
+        for (p in plugins) {
+            try {
+                val f = File("plugins/${p.filename}")
+                val loader = URLClassLoader.newInstance(arrayOf(f.toURI().toURL()))
+                val pl = loader.loadClass(p.mainClass).getDeclaredConstructor().newInstance() as Plugin
+                pl.start()
+                c++
+            } catch (e: Exception) {
+                MainLogger.error("Error while loading ${p.filename}")
+                e.printStackTrace()
+            }
+        }
+        return c
     }
 
     /**
