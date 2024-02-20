@@ -11,6 +11,10 @@ interface Plugin {
      * Logger of the plugin
      */
     val logger: Logger
+
+    /**
+     * Listeners
+     */
     val listeners: MutableList<ListenerAdapter>
 
     /**

@@ -1,9 +1,14 @@
 package world.anhgelus.kordify
 
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.interactions.commands.build.Commands
+import world.anhgelus.kordify.api.commands.CommandManager
+import world.anhgelus.kordify.common.BotHelper
 import world.anhgelus.kordify.common.config.Config
 import world.anhgelus.kordify.common.utils.MainLogger
 import world.anhgelus.kordify.main.plugins.PluginManager
+import world.anhgelus.kordify.common.storage.CommandStorage
+import world.anhgelus.kordify.common.storage.Storage
 import java.io.File
 
 fun main() {
@@ -25,10 +30,17 @@ fun main() {
     MainLogger.info("Loaded $loaded plugins")
 
     val builder = JDABuilder.createDefault(config.token)
+        .addEventListeners(CommandManager)
+
     config.intents.forEach {
         builder.enableIntents(it)
     }
     val bot = builder.build()
+
+    BotHelper.setInstance(bot)
+    BotHelper.setStorage(Storage.loadFromFile("data.yml"))
+
+    CommandManager.init()
 
     bot.awaitReady()
 
