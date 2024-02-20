@@ -12,6 +12,7 @@ import world.anhgelus.kordify.common.storage.Storage
 import java.io.File
 
 fun main() {
+    MainLogger.init()
     MainLogger.info("Starting")
     MainLogger.info("Loading config file")
 

@@ -4,7 +4,12 @@ import java.util.logging.Logger
 
 abstract class Logger {
     abstract val name: String
-    val javaLogger = Logger.getLogger(name)
+    lateinit var javaLogger: Logger
+        private set
+
+    fun init() {
+        javaLogger = Logger.getLogger(name)
+    }
 
     fun info(msg: String) {
         javaLogger.info(msg)
