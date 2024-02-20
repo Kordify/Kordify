@@ -1,5 +1,6 @@
 package world.anhgelus.kordify.main.plugins
 
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.yaml.snakeyaml.Yaml
 import world.anhgelus.kordify.api.Plugin
 import world.anhgelus.kordify.common.utils.MainLogger
@@ -16,6 +17,7 @@ import java.util.jar.JarFile
 class PluginManager {
 
     private val plugins: MutableList<PluginData> = ArrayList()
+    private val listeners: MutableList<ListenerAdapter> = ArrayList()
 
     init {
         listPlugins()
@@ -67,6 +69,7 @@ class PluginManager {
                 val f = File("plugins/${p.filename}")
                 val loader = URLClassLoader.newInstance(arrayOf(f.toURI().toURL()))
                 val pl = loader.loadClass(p.mainClass).getDeclaredConstructor().newInstance() as Plugin
+                listeners.addAll(pl.listeners)
                 pl.start()
                 c++
             } catch (e: Exception) {
@@ -83,5 +86,13 @@ class PluginManager {
      */
     fun getPlugins() : List<PluginData> {
         return plugins
+    }
+
+    /**
+     * Get the listeners
+     * @return list of listeners
+     */
+    fun getListeners() : List<ListenerAdapter> {
+        return listeners
     }
 }
