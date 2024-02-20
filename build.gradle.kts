@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "world.anhgelus.kordify"
-version = "0.0.1"
+version = "0.1.0"
 application.mainClass = "${group}.MainKt"
 
 val jdaVersion = "5.0.0-beta.20"
