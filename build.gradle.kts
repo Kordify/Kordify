@@ -2,10 +2,11 @@ plugins {
     kotlin("jvm") version "1.9.22"
     application
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    `maven-publish`
 }
 
 group = "world.anhgelus.kordify"
-version = "0.1.0"
+version = "0.1.1"
 application.mainClass = "${group}.MainKt"
 
 val jdaVersion = "5.0.0-beta.20"
