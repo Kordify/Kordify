@@ -13,22 +13,23 @@ import java.io.File
 
 fun main() {
     MainLogger.init()
-    MainLogger.info("Starting")
-    MainLogger.info("Loading config file")
+    val logger = MainLogger.javaLogger
+    logger.info("Starting")
+    logger.info("Loading config file")
 
     val configFile = File("config.yml")
     if (configFile.createNewFile()) {
-        MainLogger.warn("File not found. Creating a new one.")
+        logger.warning("File not found. Creating a new one.")
         configFile.writeText("token: \"\"\nintents:\n- MESSAGE_CONTENT\n- GUILD_MEMBERS\n- GUILD_PRESENCES")
-        MainLogger.info("Exiting")
+        logger.info("Exiting")
         return
     }
     val config = Config.loadFromFile(configFile)
 
-    MainLogger.info("Loading plugins inside ./plugins")
+    logger.info("Loading plugins inside ./plugins")
     val manager = PluginManager()
     val loaded = manager.getPlugins().size
-    MainLogger.info("Loaded $loaded plugins")
+    logger.info("Loaded $loaded plugins")
 
     val builder = JDABuilder.createDefault(config.token)
         .addEventListeners(CommandManager)
@@ -45,9 +46,9 @@ fun main() {
 
     bot.awaitReady()
 
-    MainLogger.info("Starting plugins")
+    logger.info("Starting plugins")
     val n = manager.startPlugins()
-    MainLogger.info("$n / $loaded plugins started")
+    logger.info("$n / $loaded plugins started")
 
     manager.getListeners().forEach {
         bot.addEventListener(it)

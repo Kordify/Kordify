@@ -48,7 +48,7 @@ class PluginManager {
                 }
             }
             if (conf == null) {
-                MainLogger.info(jarFile.name+" is not a valid plugin")
+                MainLogger.javaLogger.info(jarFile.name+" is not a valid plugin")
             } else {
                 val ins = jarFile.getInputStream(conf)
                 val yaml = Yaml()
@@ -73,7 +73,7 @@ class PluginManager {
                 pl.start()
                 c++
             } catch (e: Exception) {
-                MainLogger.error("Error while loading ${p.filename}")
+                MainLogger.javaLogger.severe("Error while loading ${p.filename}")
                 e.printStackTrace()
             }
         }
