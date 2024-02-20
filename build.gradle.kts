@@ -4,9 +4,9 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
-application.mainClass = "${group}.Main"
 group = "world.anhgelus.kordify"
 version = "0.0.1"
+application.mainClass = "${group}.MainKt"
 
 val jdaVersion = "5.0.0-beta.20"
 
