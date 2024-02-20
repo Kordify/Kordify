@@ -17,6 +17,7 @@ repositories {
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     implementation("net.dv8tion:JDA:$jdaVersion")
+    implementation("org.yaml:snakeyaml:2.2")
 }
 
 tasks.test {
