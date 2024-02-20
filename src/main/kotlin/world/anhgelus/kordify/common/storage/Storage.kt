@@ -96,8 +96,19 @@ data class CommandStorage(
         fun fromMap(map: Map<*, *>): CommandStorage {
             val name = map["name"] as String
             val description = map["description"] as String
-            val perms = map["perms"] as Long
-            return CommandStorage(name, description, perms)
+            return when (val perms = map["perms"]) {
+                is Int -> {
+                    CommandStorage(name, description, perms.toLong())
+                }
+
+                is Long -> {
+                    CommandStorage(name, description, perms)
+                }
+
+                else -> {
+                    throw IllegalArgumentException("Perms does not have a valid value")
+                }
+            }
         }
 
         fun fromCommand(c: Command): CommandStorage {
