@@ -11,6 +11,12 @@ fun main() {
     MainLogger.info("Loading config file")
 
     val configFile = File("config.yml")
+    if (configFile.createNewFile()) {
+        MainLogger.warn("File not found. Creating a new one.")
+        configFile.writeText("token: \"\"\nintents:\n- MESSAGE_CONTENT\n- GUILD_MEMBERS\n- GUILD_PRESENCES")
+        MainLogger.info("Exiting")
+        return
+    }
     val config = Config.loadFromFile(configFile)
 
     MainLogger.info("Loading plugins inside ./plugins")
