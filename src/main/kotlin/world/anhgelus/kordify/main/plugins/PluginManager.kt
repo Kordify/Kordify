@@ -54,7 +54,7 @@ class PluginManager {
                 }
             }
             if (conf == null) {
-                MainLogger.javaLogger.info(jarFile.name+" is not a valid plugin")
+                MainLogger.javaLogger.warning(jarFile.name+" is not a valid plugin")
             } else {
                 val ins = jarFile.getInputStream(conf)
                 val yaml = Yaml()

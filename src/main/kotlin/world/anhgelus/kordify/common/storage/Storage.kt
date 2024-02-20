@@ -111,6 +111,11 @@ data class CommandStorage(
             }
         }
 
+        /**
+         * Load the command storage from a command
+         * @param c command to load from
+         * @return command storage generated
+         */
         fun fromCommand(c: Command): CommandStorage {
             return CommandStorage(c.name, c.description, c.getPermissions().permissionsRaw!!)
         }
