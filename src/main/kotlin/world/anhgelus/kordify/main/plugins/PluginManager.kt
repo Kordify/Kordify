@@ -43,7 +43,7 @@ class PluginManager {
             }
         }
 
-        result.forEach {
+        for (it in result) {
             val jarFile = JarFile(it)
             val e = jarFile.entries()
             var conf: JarEntry? = null
@@ -54,13 +54,18 @@ class PluginManager {
                 }
             }
             if (conf == null) {
-                MainLogger.javaLogger.warning(jarFile.name+" is not a valid plugin")
-            } else {
-                val ins = jarFile.getInputStream(conf)
-                val yaml = Yaml()
-                val m: Map<String, Any> = yaml.load(ins)
-                plugins.add(PluginData.loadFromMap(m, jarFile.name))
+                MainLogger.javaLogger.warning(jarFile.name+" is not a valid plugin (plugin.yml not found)")
+                continue
             }
+
+            val ins = jarFile.getInputStream(conf)
+            if (ins == null) {
+                MainLogger.javaLogger.warning(jarFile.name+" is not a valid plugin (plugin.yml is empty)")
+                continue
+            }
+            val yaml = Yaml()
+            val m: Map<String, Any> = yaml.load(ins)
+            plugins.add(PluginData.loadFromMap(m, jarFile.name))
         }
     }
 
