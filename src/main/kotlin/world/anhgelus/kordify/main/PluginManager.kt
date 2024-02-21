@@ -1,4 +1,4 @@
-package world.anhgelus.kordify.main.plugins
+package world.anhgelus.kordify.main
 
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.yaml.snakeyaml.Yaml
@@ -22,6 +22,36 @@ class PluginManager {
 
     init {
         listPlugins()
+    }
+
+    /**
+     * Represents a plugin
+     * @param filename file of the plugin
+     * @param mainClass main class of the plugin
+     * @param author author of the plugin
+     * @param version version of the plugin
+     */
+    data class PluginData(
+        val filename: String,
+        val name: String,
+        val mainClass: String,
+        val author: String,
+        val version: String,
+    ) {
+        companion object {
+            /**
+             * Load plugin data from a map
+             * @param m the map to use
+             * @return the plugin data or null if the map is incomplete
+             */
+            fun loadFromMap(m: Map<String, Any>, filename: String) : PluginData? {
+                val mainClass = m["main"] as String? ?: return null
+                val author = m["author"] as String? ?: return null
+                val version = m["version"] as String? ?: return null
+                val name = m["name"] as String? ?: return null
+                return PluginData(filename, name, mainClass, author, version)
+            }
+        }
     }
 
     /**

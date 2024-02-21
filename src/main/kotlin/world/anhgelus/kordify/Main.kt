@@ -6,7 +6,7 @@ import world.anhgelus.kordify.common.BotHelper
 import world.anhgelus.kordify.common.BotState
 import world.anhgelus.kordify.common.config.Config
 import world.anhgelus.kordify.common.utils.MainLogger
-import world.anhgelus.kordify.main.plugins.PluginManager
+import world.anhgelus.kordify.main.PluginManager
 import world.anhgelus.kordify.common.storage.Storage
 import java.io.File
 
