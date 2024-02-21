@@ -24,21 +24,24 @@ object CommandManager : ListenerAdapter() {
      * @return true if the command was registered, false otherwise
      */
     fun register(c: Command): Boolean {
+        // if command is already registered
         if (c in registered) {
             return false
         }
-        val bot = BotHelper.instance!!
-        bot.updateCommands().addCommands(c.toJDACommand())
 
         val storage = BotHelper.storage!!
         val cs = CommandStorage.fromCommand(c)
+        // if command was already registered previously
         if (cs in storage.commands) {
+            registered.add(c)
             return false
         }
+
+        val bot = BotHelper.instance!!
+        bot.updateCommands().addCommands(c.toJDACommand()).queue()
+
         storage.commands.add(cs)
         storage.save()
-
-        registered.add(c)
         return true
     }
 
