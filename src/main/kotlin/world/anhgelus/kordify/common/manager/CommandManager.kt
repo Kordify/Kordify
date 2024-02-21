@@ -1,7 +1,8 @@
-package world.anhgelus.kordify.api.commands
+package world.anhgelus.kordify.common.manager
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
+import world.anhgelus.kordify.api.commands.Command
 import world.anhgelus.kordify.common.BotHelper
 import world.anhgelus.kordify.main.storage.CommandStorage
 
