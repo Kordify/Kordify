@@ -1,6 +1,7 @@
 package world.anhgelus.kordify.main
 
 import net.dv8tion.jda.api.hooks.ListenerAdapter
+import net.dv8tion.jda.api.requests.GatewayIntent
 import org.yaml.snakeyaml.Yaml
 import world.anhgelus.kordify.api.Plugin
 import java.io.File
@@ -40,6 +41,7 @@ class PluginManager {
         val mainClass: String,
         val author: String,
         val version: String,
+        val intents: List<GatewayIntent>?
     ) {
         companion object {
             /**
@@ -57,7 +59,18 @@ class PluginManager {
                     ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "version is not present")
                 val name = m["name"] as String?
                     ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "name is not present")
-                return PluginData(filename, name, mainClass, author, version)
+                val i = m["intents"] as List<*>? ?: PluginData(filename, name, mainClass, author, version, null)
+                val intents: MutableList<GatewayIntent> = ArrayList()
+                for (ic in i as List<*>) {
+                    if (ic !is String) {
+                        throw InvalidPluginException(
+                            InvalidPluginException.Reason.INVALID_PLUGIN_YML,
+                            "intent $ic is not a string"
+                        )
+                    }
+                    intents.add(GatewayIntent.valueOf(ic))
+                }
+                return PluginData(filename, name, mainClass, author, version, intents)
             }
         }
     }

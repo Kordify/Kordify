@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDABuilder
 import world.anhgelus.kordify.common.manager.CommandManager
 import world.anhgelus.kordify.common.BotHelper
 import world.anhgelus.kordify.common.config.Config
+import world.anhgelus.kordify.main.IntentsManager
 import world.anhgelus.kordify.main.MainLogger
 import world.anhgelus.kordify.main.PluginManager
 import world.anhgelus.kordify.main.storage.Storage
@@ -19,7 +20,8 @@ fun main() {
     val configFile = File("config.yml")
     if (configFile.createNewFile()) {
         MainLogger.warning("File not found. Creating a new one.")
-        configFile.writeText("token: \"\"\nintents:\n  - MESSAGE_CONTENT\n  - GUILD_MEMBERS\n  - GUILD_PRESENCES")
+        configFile.writeText("token: \"\"# put your token here\n" +
+                "intents:\n  - MESSAGE_CONTENT\n  - GUILD_MEMBERS\n  - GUILD_PRESENCES")
         MainLogger.info("Exiting")
         return
     }
@@ -30,13 +32,10 @@ fun main() {
     val loaded = manager.getPlugins().size
     MainLogger.info("Loaded $loaded plugins")
 
-    val builder = JDABuilder.createDefault(config.token)
+    val bot = JDABuilder.createDefault(config.token)
         .addEventListeners(CommandManager)
-
-    config.intents.forEach {
-        builder.enableIntents(it)
-    }
-    val bot = builder.build()
+        .enableIntents(IntentsManager.generateIntents(manager, config))
+        .build()
 
     BotHelper.setInstance(bot)
     BotHelper.setStorage(Storage.loadFromFile("data.yml"))
