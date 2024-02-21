@@ -2,7 +2,6 @@ package world.anhgelus.kordify.api
 
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import world.anhgelus.kordify.common.BotHelper
-import world.anhgelus.kordify.common.BotState
 import world.anhgelus.kordify.common.config.ConfigManager
 import world.anhgelus.kordify.common.utils.Logger
 
@@ -45,7 +44,7 @@ abstract class Plugin {
      * @param listener listener to register
      */
     fun registerListener(listener: ListenerAdapter) {
-        if (BotHelper.state == BotState.LISTENERS_REGISTERED) {
+        if (BotHelper.state == BotHelper.State.LISTENERS_REGISTERED) {
             BotHelper.instance!!.addEventListener(listener)
         }
         listeners.add(listener)
