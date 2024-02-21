@@ -5,6 +5,7 @@ import org.yaml.snakeyaml.Yaml
 import world.anhgelus.kordify.api.Plugin
 import world.anhgelus.kordify.common.utils.MainLogger
 import java.io.File
+import java.net.URL
 import java.net.URLClassLoader
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -111,8 +112,7 @@ class PluginManager {
         var c = 0
         for (p in plugins) {
             try {
-                val f = File("plugins/${p.filename}")
-                val loader = URLClassLoader.newInstance(arrayOf(f.toURI().toURL()))
+                val loader = URLClassLoader.newInstance(arrayOf(URL("jar:file:${p.filename}!/")))
                 val pl = loader.loadClass(p.mainClass).getDeclaredConstructor().newInstance() as Plugin
                 listeners.addAll(pl.listeners)
                 pl.setPluginName(p.name)
