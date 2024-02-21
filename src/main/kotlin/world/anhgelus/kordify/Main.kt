@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDABuilder
 import world.anhgelus.kordify.common.manager.CommandManager
 import world.anhgelus.kordify.common.BotHelper
 import world.anhgelus.kordify.common.config.Config
+import world.anhgelus.kordify.main.IntentsManager
 import world.anhgelus.kordify.main.MainLogger
 import world.anhgelus.kordify.main.PluginManager
 import world.anhgelus.kordify.main.storage.Storage
@@ -33,7 +34,7 @@ fun main() {
     val builder = JDABuilder.createDefault(config.token)
         .addEventListeners(CommandManager)
 
-    config.intents.forEach {
+    IntentsManager.generateIntents(manager, config).forEach {
         builder.enableIntents(it)
     }
     val bot = builder.build()
