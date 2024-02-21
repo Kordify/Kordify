@@ -31,13 +31,10 @@ fun main() {
     val loaded = manager.getPlugins().size
     MainLogger.info("Loaded $loaded plugins")
 
-    val builder = JDABuilder.createDefault(config.token)
+    val bot = JDABuilder.createDefault(config.token)
         .addEventListeners(CommandManager)
-
-    IntentsManager.generateIntents(manager, config).forEach {
-        builder.enableIntents(it)
-    }
-    val bot = builder.build()
+        .enableIntents(IntentsManager.generateIntents(manager, config))
+        .build()
 
     BotHelper.setInstance(bot)
     BotHelper.setStorage(Storage.loadFromFile("data.yml"))
