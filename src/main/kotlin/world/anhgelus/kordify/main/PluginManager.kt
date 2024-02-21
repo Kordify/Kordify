@@ -85,7 +85,7 @@ class PluginManager {
             try {
                 loadPlugin(it)
             } catch (e: InvalidPluginException) {
-                MainLogger.javaLogger.warning("Error while loading ${it.name} : $e")
+                MainLogger.warning("Error while loading ${it.name} : $e")
             }
         }
     }
@@ -125,7 +125,7 @@ class PluginManager {
                 pl.start()
                 c++
             } catch (e: Exception) {
-                MainLogger.javaLogger.severe("Error while loading ${p.filename}")
+                MainLogger.severe("Error while loading ${p.filename}")
                 e.printStackTrace()
             }
         }

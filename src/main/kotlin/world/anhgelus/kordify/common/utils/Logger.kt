@@ -10,4 +10,16 @@ abstract class Logger {
     fun init() {
         javaLogger = Logger.getLogger(name)
     }
+
+    fun info(msg: String) {
+        javaLogger.info(msg)
+    }
+
+    fun warning(msg: String) {
+        javaLogger.warning(msg)
+    }
+
+    fun severe(msg: String) {
+        javaLogger.severe(msg)
+    }
 }
