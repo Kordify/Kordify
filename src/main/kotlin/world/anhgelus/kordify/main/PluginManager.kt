@@ -46,12 +46,17 @@ class PluginManager {
              * Load plugin data from a map
              * @param m the map to use
              * @return the plugin data or null if the map is incomplete
+             * @throws InvalidPluginException if the map is invalid
              */
-            fun loadFromMap(m: Map<String, Any>, filename: String) : PluginData? {
-                val mainClass = m["main"] as String? ?: return null
-                val author = m["author"] as String? ?: return null
-                val version = m["version"] as String? ?: return null
-                val name = m["name"] as String? ?: return null
+            fun loadFromMap(m: Map<String, Any>, filename: String) : PluginData {
+                val mainClass = m["main"] as String?
+                    ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "main is not present")
+                val author = m["author"] as String?
+                    ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "author is not present")
+                val version = m["version"] as String?
+                    ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "version is not present")
+                val name = m["name"] as String?
+                    ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "name is not present")
                 return PluginData(filename, name, mainClass, author, version)
             }
         }
@@ -59,8 +64,6 @@ class PluginManager {
 
     /**
      * Generate the list of plugins
-     *
-     * @throws InvalidPluginException if the plugin is invalid
      */
     private fun listPlugins() {
         val result: MutableList<File> = ArrayList()
@@ -87,6 +90,11 @@ class PluginManager {
         }
     }
 
+    /**
+     * Load a plugin from a jar file
+     * @param file the jar file to use
+     * @throws InvalidPluginException if the plugin is invalid
+     */
     private fun loadPlugin(file: File) {
         val jar = JarFile(file)
         val conf: JarEntry = jar.getJarEntry("plugin.yml")
@@ -97,8 +105,6 @@ class PluginManager {
         val yaml = Yaml()
         val m: Map<String, Any> = yaml.load(ins)
         val data = PluginData.loadFromMap(m, jar.name)
-            ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "missing information")
-
         plugins.add(data)
         jar.close()
         ins.close()
