@@ -14,6 +14,8 @@ import kotlin.io.path.exists
 
 /**
  * Manage plugins
+ *
+ * @throws InvalidPluginException if one or more plugin is invalid
  */
 class PluginManager {
 
@@ -56,6 +58,8 @@ class PluginManager {
 
     /**
      * Generate the list of plugins
+     *
+     * @throws InvalidPluginException if the plugin is invalid
      */
     private fun listPlugins() {
         val result: MutableList<File> = ArrayList()
@@ -73,35 +77,30 @@ class PluginManager {
             }
         }
 
-        for (it in result) {
-            val jarFile = JarFile(it)
-            val e = jarFile.entries()
-            var conf: JarEntry? = null
-            while (e.hasMoreElements() && conf == null) {
-                val je = e.nextElement()
-                if (je.name == "plugin.yml") {
-                    conf = je
-                }
+        result.forEach {
+            try {
+                loadPlugin(it)
+            } catch (e: InvalidPluginException) {
+                MainLogger.javaLogger.warning("Error while loading ${it.name} : $e")
             }
-            if (conf == null) {
-                MainLogger.javaLogger.warning(jarFile.name+" is not a valid plugin (plugin.yml not found)")
-                continue
-            }
-
-            val ins = jarFile.getInputStream(conf)
-            if (ins == null) {
-                MainLogger.javaLogger.warning(jarFile.name+" is not a valid plugin (plugin.yml is empty)")
-                continue
-            }
-            val yaml = Yaml()
-            val m: Map<String, Any> = yaml.load(ins)
-            val data = PluginData.loadFromMap(m, jarFile.name)
-            if (data == null) {
-                MainLogger.javaLogger.warning(jarFile.name+" is not a valid plugin (missing information in plugin.yml)")
-                continue
-            }
-            plugins.add(data)
         }
+    }
+
+    private fun loadPlugin(file: File) {
+        val jar = JarFile(file)
+        val conf: JarEntry = jar.getJarEntry("plugin.yml")
+            ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "not found")
+
+        val ins = jar.getInputStream(conf)
+            ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "empty")
+        val yaml = Yaml()
+        val m: Map<String, Any> = yaml.load(ins)
+        val data = PluginData.loadFromMap(m, jar.name)
+            ?: throw InvalidPluginException(InvalidPluginException.Reason.INVALID_PLUGIN_YML, "missing information")
+
+        plugins.add(data)
+        jar.close()
+        ins.close()
     }
 
     /**
