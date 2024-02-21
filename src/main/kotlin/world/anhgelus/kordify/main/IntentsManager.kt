@@ -2,7 +2,6 @@ package world.anhgelus.kordify.main
 
 import net.dv8tion.jda.api.requests.GatewayIntent
 import world.anhgelus.kordify.common.config.Config
-import java.util.EnumSet
 
 /**
  * Manage intents
@@ -16,10 +15,25 @@ object IntentsManager {
      */
     fun generateIntents(manager: PluginManager, config: Config): Set<GatewayIntent> {
         val intents = config.intents.toMutableSet()
+        val enabled = config.intents.toMutableSet()
+        // all intents not in DEFAULT
         val max = GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS and GatewayIntent.DEFAULT.inv())
+        if (enabled == max) return enabled
         for (p in manager.getPlugins()) {
-            if (max == intents) return intents
-            p.intents?.forEach { intents.add(it) }
+            if (max == intents) break
+            p.intents?.forEach {
+                // if intent is not in DEFAULT
+                if (it.rawValue and GatewayIntent.DEFAULT == 0) {
+                    intents.add(it)
+                }
+            }
+        }
+        if (enabled != intents) {
+            // intents not in enabled
+            val diff = GatewayIntent.getIntents(GatewayIntent.getRaw(intents) and GatewayIntent.getRaw(enabled).inv())
+            MainLogger.warning("You have to enable these intents if you want to work properly with all installed" +
+                    "plugins : ${diff.joinToString(separator = ", ")}")
+            return enabled
         }
         return intents
     }
