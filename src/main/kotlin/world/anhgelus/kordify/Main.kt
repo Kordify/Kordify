@@ -3,7 +3,6 @@ package world.anhgelus.kordify
 import net.dv8tion.jda.api.JDABuilder
 import world.anhgelus.kordify.api.commands.CommandManager
 import world.anhgelus.kordify.common.BotHelper
-import world.anhgelus.kordify.common.BotState
 import world.anhgelus.kordify.common.config.Config
 import world.anhgelus.kordify.common.utils.MainLogger
 import world.anhgelus.kordify.main.PluginManager
@@ -15,7 +14,7 @@ fun main() {
     MainLogger.info("Starting")
     MainLogger.info("Loading config file")
 
-    BotHelper.state = BotState.LOADING
+    BotHelper.state = BotHelper.State.LOADING
 
     val configFile = File("config.yml")
     if (configFile.createNewFile()) {
@@ -46,7 +45,7 @@ fun main() {
 
     bot.awaitReady()
 
-    BotHelper.state = BotState.LAUNCHING_PLUGINS
+    BotHelper.state = BotHelper.State.LAUNCHING_PLUGINS
 
     MainLogger.info("Starting plugins")
     val n = manager.startPlugins()
@@ -56,13 +55,13 @@ fun main() {
         bot.addEventListener(it)
     }
 
-    BotHelper.state = BotState.LISTENERS_REGISTERED
+    BotHelper.state = BotHelper.State.LISTENERS_REGISTERED
 
     bot.awaitShutdown()
 
-    BotHelper.state = BotState.STOPPING_PLUGINS
+    BotHelper.state = BotHelper.State.STOPPING_PLUGINS
 
     manager.stopPlugins()
 
-    BotHelper.state = BotState.NOT_LOADED
+    BotHelper.state = BotHelper.State.NOT_LOADED
 }

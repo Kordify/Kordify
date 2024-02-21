@@ -4,6 +4,15 @@ import net.dv8tion.jda.api.JDA
 import world.anhgelus.kordify.common.storage.Storage
 
 object BotHelper {
+
+    enum class State {
+        NOT_LOADED,
+        LOADING,
+        LAUNCHING_PLUGINS,
+        LISTENERS_REGISTERED,
+        STOPPING_PLUGINS,
+    }
+
     /**
      * Instance of the bot
      */
@@ -23,7 +32,7 @@ object BotHelper {
      *
      * Do not edit!
      */
-    var state: BotState = BotState.NOT_LOADED
+    var state: State = State.NOT_LOADED
 
     /**
      * Set the instance
