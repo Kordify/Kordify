@@ -20,6 +20,8 @@ Coming soon!
 - JDA
 - SnakeYaml
 
+We are currently using Java 17.
+
 ## Contributing
 
 Issues, PR and other things are welcomed!
