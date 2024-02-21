@@ -11,14 +11,19 @@ class ConfigManager(
     private val pluginName: String
 ) {
     /**
-     * Get the config with the given path
+     * Get or create the config with the given path
      * @param path the path
      * @return the config
      */
     fun getConfig(path: String): ConfigFile {
         val yaml = Yaml()
         val fullPath = generateFullPath(path)
-        val map: MutableMap<String, Any> = yaml.load(File(fullPath).inputStream())
+        createDirs(path)
+        val file = File(fullPath)
+        if (file.createNewFile()) {
+            return ConfigFile(HashMap(), fullPath)
+        }
+        val map: MutableMap<String, Any> = yaml.load(file.inputStream())
         return ConfigFile(map, fullPath)
     }
 
@@ -29,5 +34,11 @@ class ConfigManager(
      */
     private fun generateFullPath(path: String): String {
         return "plugins/$pluginName/$path.yml"
+    }
+
+    private fun createDirs(path: String): Boolean {
+        val paths = path.split("/")
+        val file = File(paths.subList(0,paths.size-1).joinToString(separator = "/"))
+        return file.mkdirs()
     }
 }
