@@ -20,7 +20,8 @@ fun main() {
     val configFile = File("config.yml")
     if (configFile.createNewFile()) {
         MainLogger.warning("File not found. Creating a new one.")
-        configFile.writeText("token: \"\"\nintents:\n  - MESSAGE_CONTENT\n  - GUILD_MEMBERS\n  - GUILD_PRESENCES")
+        configFile.writeText("token: \"\"# put your token here\n" +
+                "intents:\n  - MESSAGE_CONTENT\n  - GUILD_MEMBERS\n  - GUILD_PRESENCES")
         MainLogger.info("Exiting")
         return
     }
