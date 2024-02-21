@@ -3,7 +3,7 @@ package world.anhgelus.kordify.api.commands
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import world.anhgelus.kordify.common.BotHelper
-import world.anhgelus.kordify.common.storage.CommandStorage
+import world.anhgelus.kordify.main.storage.CommandStorage
 
 /**
  * The command manager

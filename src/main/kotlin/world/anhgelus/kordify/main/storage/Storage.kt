@@ -1,4 +1,4 @@
-package world.anhgelus.kordify.common.storage
+package world.anhgelus.kordify.main.storage
 
 import org.yaml.snakeyaml.Yaml
 import world.anhgelus.kordify.api.commands.Command

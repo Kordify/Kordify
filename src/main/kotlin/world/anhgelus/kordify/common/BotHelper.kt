@@ -1,7 +1,7 @@
 package world.anhgelus.kordify.common
 
 import net.dv8tion.jda.api.JDA
-import world.anhgelus.kordify.common.storage.Storage
+import world.anhgelus.kordify.main.storage.Storage
 
 object BotHelper {
 

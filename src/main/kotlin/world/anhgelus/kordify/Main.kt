@@ -4,9 +4,9 @@ import net.dv8tion.jda.api.JDABuilder
 import world.anhgelus.kordify.api.commands.CommandManager
 import world.anhgelus.kordify.common.BotHelper
 import world.anhgelus.kordify.common.config.Config
-import world.anhgelus.kordify.common.utils.MainLogger
+import world.anhgelus.kordify.main.MainLogger
 import world.anhgelus.kordify.main.PluginManager
-import world.anhgelus.kordify.common.storage.Storage
+import world.anhgelus.kordify.main.storage.Storage
 import java.io.File
 
 fun main() {

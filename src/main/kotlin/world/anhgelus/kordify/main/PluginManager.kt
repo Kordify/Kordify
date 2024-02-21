@@ -3,7 +3,6 @@ package world.anhgelus.kordify.main
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import org.yaml.snakeyaml.Yaml
 import world.anhgelus.kordify.api.Plugin
-import world.anhgelus.kordify.common.utils.MainLogger
 import java.io.File
 import java.net.URL
 import java.net.URLClassLoader
