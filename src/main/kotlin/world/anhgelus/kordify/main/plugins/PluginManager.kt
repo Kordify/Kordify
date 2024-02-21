@@ -76,6 +76,7 @@ class PluginManager {
                 val loader = URLClassLoader.newInstance(arrayOf(f.toURI().toURL()))
                 val pl = loader.loadClass(p.mainClass).getDeclaredConstructor().newInstance() as Plugin
                 listeners.addAll(pl.listeners)
+                pl.setPluginName(p.name)
                 pl.start()
                 c++
             } catch (e: Exception) {

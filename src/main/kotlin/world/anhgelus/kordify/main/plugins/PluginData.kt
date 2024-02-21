@@ -9,6 +9,7 @@ package world.anhgelus.kordify.main.plugins
  */
 data class PluginData(
     val filename: String,
+    val name: String,
     val mainClass: String,
     val author: String,
     val version: String,
@@ -18,7 +19,8 @@ data class PluginData(
             val mainClass = m["main"] as String
             val author = m["author"] as String
             val version = m["version"] as String
-            return PluginData(filename, mainClass, author, version)
+            val name = m["name"] as String
+            return PluginData(filename, name, mainClass, author, version)
         }
     }
 }

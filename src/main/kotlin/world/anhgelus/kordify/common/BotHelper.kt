@@ -10,6 +10,8 @@ object BotHelper {
     var storage: Storage? = null
         private set
 
+    var state: BotState = BotState.NOT_LOADED
+
     fun setInstance(bot: JDA) {
         if (instance != null) {
             return
