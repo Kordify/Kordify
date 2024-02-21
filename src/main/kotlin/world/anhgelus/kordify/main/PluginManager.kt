@@ -120,9 +120,9 @@ class PluginManager {
             try {
                 val loader = URLClassLoader.newInstance(arrayOf(URL("jar:file:${p.filename}!/")))
                 val pl = loader.loadClass(p.mainClass).getDeclaredConstructor().newInstance() as Plugin
-                listeners.addAll(pl.listeners)
                 pl.setPluginName(p.name)
                 pl.start()
+                listeners.addAll(pl.listeners)
                 pluginsStarted.add(pl)
                 c++
             } catch (e: Exception) {
