@@ -15,11 +15,11 @@ data class PluginData(
     val version: String,
 ) {
     companion object {
-        fun loadFromMap(m: Map<String, Any>, filename: String) : PluginData {
-            val mainClass = m["main"] as String
-            val author = m["author"] as String
-            val version = m["version"] as String
-            val name = m["name"] as String
+        fun loadFromMap(m: Map<String, Any>, filename: String) : PluginData? {
+            val mainClass = m["main"] as String? ?: return null
+            val author = m["author"] as String? ?: return null
+            val version = m["version"] as String? ?: return null
+            val name = m["name"] as String? ?: return null
             return PluginData(filename, name, mainClass, author, version)
         }
     }

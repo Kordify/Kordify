@@ -65,7 +65,12 @@ class PluginManager {
             }
             val yaml = Yaml()
             val m: Map<String, Any> = yaml.load(ins)
-            plugins.add(PluginData.loadFromMap(m, jarFile.name))
+            val data = PluginData.loadFromMap(m, jarFile.name)
+            if (data == null) {
+                MainLogger.javaLogger.warning(jarFile.name+" is not a valid plugin (missing information in plugin.yml)")
+                continue
+            }
+            plugins.add(data)
         }
     }
 
