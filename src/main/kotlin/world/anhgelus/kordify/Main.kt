@@ -57,4 +57,12 @@ fun main() {
     }
 
     BotHelper.state = BotState.LISTENERS_REGISTERED
+
+    bot.awaitShutdown()
+
+    BotHelper.state = BotState.STOPPING_PLUGINS
+
+    manager.stopPlugins()
+
+    BotHelper.state = BotState.NOT_LOADED
 }

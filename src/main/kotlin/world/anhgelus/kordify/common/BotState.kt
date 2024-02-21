@@ -5,4 +5,5 @@ enum class BotState {
     LOADING,
     LAUNCHING_PLUGINS,
     LISTENERS_REGISTERED,
+    STOPPING_PLUGINS,
 }

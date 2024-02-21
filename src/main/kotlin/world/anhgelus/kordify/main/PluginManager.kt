@@ -21,6 +21,7 @@ import kotlin.io.path.exists
 class PluginManager {
 
     private val plugins: MutableList<PluginData> = ArrayList()
+    private val pluginsStarted: MutableList<Plugin> = ArrayList()
     private val listeners: MutableList<ListenerAdapter> = ArrayList()
 
     init {
@@ -123,6 +124,7 @@ class PluginManager {
                 listeners.addAll(pl.listeners)
                 pl.setPluginName(p.name)
                 pl.start()
+                pluginsStarted.add(pl)
                 c++
             } catch (e: Exception) {
                 MainLogger.severe("Error while loading ${p.filename}")
@@ -130,6 +132,15 @@ class PluginManager {
             }
         }
         return c
+    }
+
+    /**
+     * Stop every plugin
+     */
+    fun stopPlugins() {
+        for (p in pluginsStarted) {
+            p.stop()
+        }
     }
 
     /**

@@ -35,6 +35,11 @@ abstract class Plugin {
     abstract fun start()
 
     /**
+     * Function called when the plugin is stopping
+     */
+    abstract fun stop()
+
+    /**
      * Register a listener.
      *
      * @param listener listener to register

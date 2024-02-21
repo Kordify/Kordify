@@ -4,25 +4,52 @@ import net.dv8tion.jda.api.JDA
 import world.anhgelus.kordify.common.storage.Storage
 
 object BotHelper {
+    /**
+     * Instance of the bot
+     */
     var instance: JDA? = null
         private set
 
+    /**
+     * Global storage
+     *
+     * Do not edit!
+     */
     var storage: Storage? = null
         private set
 
+    /**
+     * Bot state
+     *
+     * Do not edit!
+     */
     var state: BotState = BotState.NOT_LOADED
 
-    fun setInstance(bot: JDA) {
+    /**
+     * Set the instance
+     *
+     * @param bot the instance to set
+     * @return true if the instance was set, false otherwise
+     */
+    fun setInstance(bot: JDA): Boolean {
         if (instance != null) {
-            return
+            return false
         }
         instance = bot
+        return true
     }
 
-    fun setStorage(storage: Storage) {
+    /**
+     * Set the storage
+     *
+     * @param storage the storage
+     * @return true if the storage was set, false otherwise
+     */
+    fun setStorage(storage: Storage): Boolean {
         if (this.storage != null) {
-            return
+            return false
         }
         this.storage = storage
+        return true
     }
 }
