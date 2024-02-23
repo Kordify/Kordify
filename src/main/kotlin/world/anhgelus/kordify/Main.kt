@@ -11,6 +11,7 @@ import world.anhgelus.kordify.main.storage.Storage
 import java.io.File
 
 fun main() {
+    System.setProperty("java.util.logging.SimpleFormatter.format", "[%1\$tc] %4\$s: %5\$s %6\$s%n")
     MainLogger.init()
     MainLogger.info("Starting")
     MainLogger.info("Loading config file")
