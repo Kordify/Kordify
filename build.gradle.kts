@@ -38,7 +38,7 @@ tasks.withType<JavaCompile> {
 }
 
 tasks.withType<ProcessResources> {
-    val props = mapOf(Pair("version", version))
+    val props = mapOf(Pair("version", version), Pair("jda-version", jdaVersion))
     inputs.properties(props)
     filteringCharset = "UTF-8"
     filesMatching("info.yml") {
