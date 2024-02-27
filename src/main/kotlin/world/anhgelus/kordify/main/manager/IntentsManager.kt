@@ -1,7 +1,8 @@
-package world.anhgelus.kordify.main
+package world.anhgelus.kordify.main.manager
 
 import net.dv8tion.jda.api.requests.GatewayIntent
 import world.anhgelus.kordify.common.config.Config
+import world.anhgelus.kordify.main.MainLogger
 
 /**
  * Manage intents
