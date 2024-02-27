@@ -36,3 +36,12 @@ tasks.withType<JavaCompile> {
     // the minimum required for JDA is 1.8
     sourceCompatibility = "17"
 }
+
+tasks.withType<ProcessResources> {
+    val props = mapOf(Pair("version", version))
+    inputs.properties(props)
+    filteringCharset = "UTF-8"
+    filesMatching("info.yml") {
+        this.expand(props)
+    }
+}
