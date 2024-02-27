@@ -1,14 +1,12 @@
 package world.anhgelus.kordify
 
-import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
-import net.dv8tion.jda.internal.utils.JDALogger
 import world.anhgelus.kordify.common.manager.CommandManager
 import world.anhgelus.kordify.common.BotHelper
 import world.anhgelus.kordify.common.config.Config
-import world.anhgelus.kordify.main.IntentsManager
+import world.anhgelus.kordify.main.manager.IntentsManager
 import world.anhgelus.kordify.main.MainLogger
-import world.anhgelus.kordify.main.PluginManager
+import world.anhgelus.kordify.main.manager.PluginManager
 import world.anhgelus.kordify.main.storage.Storage
 import java.io.File
 

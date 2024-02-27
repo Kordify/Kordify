@@ -1,0 +1,2 @@
+version: '${version}'
+jda-version: '${jda-version}'
