@@ -10,9 +10,9 @@ A modular bot Discord based on plugins and extensions.
 enabled by default)
 - Relaunch it with `java -jar kordify.jar` and then the bot is starting!
 
-## Documentations
+## Documentation
 
-Coming soon!
+The documentation is available [here](https://kordify.github.io/presentation.html).
 
 ## Technologies
 
